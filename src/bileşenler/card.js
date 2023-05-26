@@ -1,4 +1,4 @@
-const Card = (makale) => {
+import axios from 'axios';
   // GÖREV 5
   // ---------------------
   // Aşağıda gördüğünüz işaretlemeyi döndürmesi gereken bu fonksiyonu uygulayın.
@@ -17,9 +17,39 @@ const Card = (makale) => {
   //   </div>
   // </div>
   //
-}
+ 
 
-const cardEkleyici = (secici) => {
+  const Card = (makale) => {
+    const parentDiv = document.createElement("div");
+    parentDiv.setAttribute("class", "card");
+    
+    const firstChildDiv = document.createElement("div");
+    firstChildDiv.setAttribute("class", "headline");
+    firstChildDiv.textContent = makale.anabaslik;
+
+    const secondChildDiv = document.createElement("div");
+    secondChildDiv.setAttribute("class", "author");
+
+    const thirdChildDiv = document.createElement("div");
+    thirdChildDiv.setAttribute("class", "img-container");
+    const image = document.createElement("img");
+    image.setAttribute("src", makale.yazarFoto);
+    thirdChildDiv.append(image);
+
+    const span = document.createElement("span");
+    span.textContent = makale.yazarAdi + " tarafından";
+    
+    parentDiv.addEventListener("click", (e)=>
+    console.log(makale.anabaslik));
+
+    secondChildDiv.append(thirdChildDiv,span);
+    parentDiv.append(firstChildDiv,secondChildDiv);
+
+     return parentDiv
+  }
+
+
+
   // GÖREV 6
   // ---------------------
   // Tek bağımsız değişkeni olarak bir css seçici alan bu fonksiyonu uygulayın.
@@ -28,6 +58,17 @@ const cardEkleyici = (secici) => {
   // Card bileşenini kullanarak yanıttaki her makale nesnesinden bir kart oluşturun.
   // Her cardı, fonksiyona iletilen seçiciyle eşleşen DOM'daki öğeye ekleyin.
   //
-}
+  const cardEkleyici = (secici) => {
+    axios.get("http://localhost:5001/api/makaleler").then(res => {
+      const makaleler =res.data.makaleler;
+      console.log(makaleler)
+      for(let category in makaleler){
+        makaleler[category].forEach(makale => {
+          return document.querySelector(secici).append(Card(makale))
+        });
+      }
+    });
+    
+  }
 
 export { Card, cardEkleyici }
