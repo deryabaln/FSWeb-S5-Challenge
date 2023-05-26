@@ -17,13 +17,13 @@ import axios from 'axios';
     const parentDiv = document.createElement("div");
     parentDiv.setAttribute("class", "topics");
     
-   for(let i=0; i<konu.length; i++)  {
+   konu.forEach(topic => {
     const childDivs = document.createElement("div");
     childDivs.setAttribute("class", "tab");
-    childDivs.textContent = konu[i]
-    parentDiv.append(childDivs)
-    };
-     return parentDiv
+    childDivs.textContent = topic;
+    parentDiv.append(childDivs);
+    });
+     return parentDiv;
   }
 
   // GÖREV 4
@@ -36,8 +36,8 @@ import axios from 'axios';
   const tabEkleyici = (secici) => {
     axios.get("http://localhost:5001/api/konular").then(res => {
       const topics =res.data.konular;
-      return document.querySelector(secici).append(Tablar(topics))
+      return document.querySelector(secici).append(Tablar(topics));
     });
-  }
+  };
 
 export { Tablar, tabEkleyici }

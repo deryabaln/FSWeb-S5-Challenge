@@ -62,8 +62,8 @@ import axios from 'axios';
     axios.get("http://localhost:5001/api/makaleler").then(res => {
       const makaleler =res.data.makaleler;
       console.log(makaleler)
-      for(let category in makaleler){
-        makaleler[category].forEach(makale => {
+      for(let key in makaleler){
+        makaleler[key].forEach(makale => {
           return document.querySelector(secici).append(Card(makale))
         });
       }
